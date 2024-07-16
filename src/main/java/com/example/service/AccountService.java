@@ -8,25 +8,23 @@ import org.springframework.stereotype.Service;
 import com.example.entity.Account;
 import com.example.repository.AccountRepository;
 
+
 @Service
 public class AccountService {
 
     @Autowired
     private AccountRepository accountRepository;
+    private MessageService messageService;
 
-    public List<Account> getAccountList(){
-        return accountRepository.findAll();
-    }
-
-    public Account byUsername(String username){
+   
+    public Account findByUsername(String username){
         return accountRepository.findByUsername(username).orElse(null);
     }
 
 
     public Account registration(Account account){
-        //return accountRepository.save(account);
         
-        if(byUsername(account.getUsername())==null && !(account.getUsername().isEmpty()) && (account.getPassword()).length()>=4){
+        if(findByUsername(account.getUsername())==null && !(account.getUsername().isEmpty()) && (account.getPassword()).length()>=4){
             
             return accountRepository.save(account);
         }
@@ -34,8 +32,15 @@ public class AccountService {
         else{
             return null;
         }
-        
-        
+ 
+    }
+
+    public Account loginAccount(String username, String password) throws ArithmeticException{
+        return accountRepository.findByUsernameAndPassword(username, password).orElse(null);
+    }
+
+    public Account findById(int Id){
+        return accountRepository.findById(Id).orElse(null);
     }
 
 }
