@@ -93,7 +93,6 @@ public class SocialMediaController {
             return ResponseEntity.status(400).body(null);
 
         }
-
     }
 
     @GetMapping("/messages")
