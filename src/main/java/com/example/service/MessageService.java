@@ -47,10 +47,8 @@ public class MessageService {
         else{
             return null;
         }
-        
-        
+           
     }
-    
 
     public List<Message> allMessageByUser(int accountId){
         return messageRepository.findByPostedBy(accountId);

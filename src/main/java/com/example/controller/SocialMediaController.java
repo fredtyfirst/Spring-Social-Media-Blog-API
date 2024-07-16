@@ -63,7 +63,7 @@ public class SocialMediaController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Account> login(@RequestBody Account account) throws AuthenticationException{
+    public ResponseEntity<Account> login(@RequestBody Account account){
         Account log = accountService.loginAccount(account.getUsername(), account.getPassword());
 
         if (log != null) {
@@ -131,14 +131,11 @@ public class SocialMediaController {
         
     }
     
-
     @GetMapping("/accounts/{account_id}/messages")
     public List<Message> allMessagesById(@PathVariable int account_id){
         List<Message> messageList = messageService.allMessageByUser(account_id);
         return messageList;
         
     }
-
-    
 
 }

@@ -35,7 +35,7 @@ public class AccountService {
  
     }
 
-    public Account loginAccount(String username, String password) throws ArithmeticException{
+    public Account loginAccount(String username, String password){
         return accountRepository.findByUsernameAndPassword(username, password).orElse(null);
     }
 
