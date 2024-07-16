@@ -3,7 +3,10 @@ package com.example.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -94,8 +97,48 @@ public class SocialMediaController {
     }
 
     @GetMapping("/messages")
-    public @ResponseBody List<Message> allMessage(){
+    public List<Message> allMessage(){
         return messageService.getAllMessage();
     }
+
+    @GetMapping("messages/{message_id}")
+    public Message messageById(@PathVariable int message_id){
+        return messageService.getMessageById(message_id);
+    }
+
+    @DeleteMapping("messages/{message_id}")
+    public ResponseEntity<Integer> deleteMessage(@PathVariable int message_id){
+        
+        if(messageService.getMessageById(message_id)!=null){
+            messageService.deleteMessageById(message_id);
+            return ResponseEntity.status(200).body(1);
+        }
+        else{
+            return ResponseEntity.status(200).body(null);
+        }
+        
+    }
+    
+    @PatchMapping("messages/{message_id}")
+    public ResponseEntity<Integer> updateMessage(@PathVariable int message_id, @RequestBody Message message){
+        String mess = messageService.updateMessageById(message_id, message);
+        if(mess!=null){
+            return ResponseEntity.status(200).body(1);
+        }
+        else{
+            return ResponseEntity.status(400).body(null);
+        }
+        
+    }
+    
+
+    @GetMapping("/accounts/{account_id}/messages")
+    public List<Message> allMessagesById(@PathVariable int account_id){
+        List<Message> messageList = messageService.allMessageByUser(account_id);
+        return messageList;
+        
+    }
+
+    
 
 }

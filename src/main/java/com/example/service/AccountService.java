@@ -39,8 +39,9 @@ public class AccountService {
         return accountRepository.findByUsernameAndPassword(username, password).orElse(null);
     }
 
-    public Account findById(int Id){
-        return accountRepository.findById(Id).orElse(null);
+    public Account findById(int id){
+        return accountRepository.findById(id).orElse(null);
     }
+
 
 }

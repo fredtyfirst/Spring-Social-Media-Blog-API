@@ -30,4 +30,30 @@ public class MessageService {
         return messageRepository.findAll();
     }
 
+    public Message getMessageById(int id){
+        return messageRepository.findById(id).orElse(null);
+    }
+
+    public void deleteMessageById(int id){
+        messageRepository.deleteById(id);
+    }
+     
+    public String updateMessageById(int id, Message message){
+        Message mess = getMessageById(id);
+        if(getMessageById(id)!=null && !(message.getMessageText().isEmpty()) && message.getMessageText().length()<255){
+            mess.setMessageText(message.getMessageText());
+            return "Success";
+        }
+        else{
+            return null;
+        }
+        
+        
+    }
+    
+
+    public List<Message> allMessageByUser(int accountId){
+        return messageRepository.findByPostedBy(accountId);
+    }
+
 }
